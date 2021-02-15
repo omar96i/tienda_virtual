@@ -2,9 +2,6 @@
 
 @section('content')
     <section id="app">
-        <div>
-            <home-products :products="{{ $products }}"></home-products>
-        </div>
+        <a href=""></a>
     </section>
-
 @endsection
