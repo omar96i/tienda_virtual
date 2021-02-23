@@ -7,8 +7,4 @@
     </div>
 </section>
 
-<!-- @php
-var_dump($products);
-@endphp -->
-
 @endsection

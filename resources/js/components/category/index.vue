@@ -25,7 +25,7 @@
     </div>
 </template>
 <script>
-import EditCategory from './editCategory.vue';
+import EditCategory from './edit.vue';
 export default {
     props: ['categories'],
     data(){
@@ -43,8 +43,12 @@ export default {
     },
     methods:{
         async borrar(category, index){
-			axios.post(`/category/delete/${category.id}`).then(res=>{
-                this.categories_i.splice(index, 1)
+			axios.post(`/Category/delete/${category.id}`).then(res=>{
+                if(res.data.status){
+                    this.categories_i.splice(index, 1)
+                }else{
+                    console.log("Algo paso")
+                }
 			})
 		},
         asignar(category){

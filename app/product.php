@@ -8,11 +8,11 @@ use App\category;
 class product extends Model
 {
     protected $fillable = [
-        'name','value','stock','description','image'
+        'name','value','stock','description','image','category_id'
     ];
 
     public function categories()
     {
-        return $this->belongsTo(category::class, 'id_category');
+        return $this->belongsTo(category::class, 'category_id');
     }
 }

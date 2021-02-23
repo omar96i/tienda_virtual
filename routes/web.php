@@ -1,5 +1,11 @@
 <?php
 
+use App\product;
+use Spatie\Permission\Models\Role;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,20 +16,54 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::any('/', 'ProductController@indexH')->name('home');
-Route::view('/login', 'login')->name('login');
+Route::get('/test', function () {
+
+});
+
+Route::view('/login', 'login');
+Route::post('/login', 'UserController@loginSystem')->name('login');
+Route::any('/', 'ProductController@index')->name('home');
+
+
+Route::get('/categories/{tipo}', 'ProductController@index')->name('categories.products');
+Route::get('/categories/{id}/{tipo}', 'ProductController@withCategories')->name('products.categories');
+
+
+
 Route::view('/register', 'register')->name('register');
-Route::any('/category', 'CategoryController@index')->name('category');
-Route::any('/product', 'ProductController@index')->name('product');
-Route::post('/product/insert', 'ProductController@store')->name('product.add');
-Route::post('/product/getProducts', 'ProductController@getProducts')->name('getProducts');
-Route::any('/filtrado', 'ProductController@IndexT')->name('Product1');
-Route::any('/category/delete/{Category}', 'CategoryController@delete')->name('category.delete');
-Route::any('/category/update/{Category}', 'CategoryController@update')->name('category.update');
-Route::post('/register_user', 'UserController@register')->name('register.user');
-Route::post('/register_category', 'CategoryController@store');
-Route::get('/test/{variable}', 'ProductController@edit_product');
-Route::any('/detalleProducto/{id}', 'ProductController@detalles')->name('DetalleProducto');
-Route::view('/factura', 'factura')->name('factura');
+Route::post('/register_user/{type}', 'UserController@register')->name('register.user');
+Route::get('/productOfCategory/{category_id}', 'ProductController@get')->name('get.products.category');
+
+Route::group(['middleware' => ['auth']], function(){
+
+    Route::get('/logout', 'UserController@logout')->name('logout');
+
+    Route::prefix('Category')->group(function () {
+        Route::any('/category', 'CategoryController@index')->name('category');
+        Route::any('/delete/{category}', 'CategoryController@delete')->name('category.delete');
+        Route::any('/update/{category}', 'CategoryController@update')->name('category.update');
+        Route::post('/store', 'CategoryController@store')->name('category.store');
+    });
+
+    Route::prefix('Product')->group(function () {
+        Route::any('/filtrado', 'ProductController@IndexT');
+        Route::get('/product/{tipo}', 'ProductController@index')->name('product');
+        Route::post('/store', 'ProductController@store')->name('product.add');
+        Route::post('/getProducts', 'ProductController@getProducts')->name('getProducts');
+        Route::any('/detalleProducto/{id}', 'ProductController@detalles')->name('DetalleProducto');
+        Route::get('/update/{id}', 'ProductController@updateIndex')->name('update.product');
+        Route::post('/product/update/{id}', 'ProductController@update');
+        Route::any('/delete/{id}', 'ProductController@deleteProduct');
+    });
+
+    Route::prefix('User')->group(function () {
+        Route::get('/user', 'UserController@index')->name('user');
+    });
+
+
+    Route::view('/factura', 'factura')->name('factura');
+});
+
+
 
 

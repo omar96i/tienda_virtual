@@ -2,6 +2,6 @@
 
 @section('content')
     <section id="app">
-        <a href=""></a>
+        <edit-product :category="{{$category}}" :product="{{$product}}"></edit-product>
     </section>
 @endsection

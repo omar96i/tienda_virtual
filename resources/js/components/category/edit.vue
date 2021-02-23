@@ -14,7 +14,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Name category</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" v-model="category.name">
+                                <input type="text" class="form-control" v-model="category.name" >
                             </div>
                         </div>
                         <button class="btn btn-success" type="submit">Confirm</button>
@@ -34,11 +34,10 @@ export default {
             }
         }
     },
-
     methods:{
         async edit(){
             this.items = this.category
-			axios.post(`/category/update/${this.items.id}`, this.items).then(res=>{
+			axios.post(`/Category/update/${this.category.id}`, this.items).then(res=>{
                 $("#modalEdit").modal('hide');
 			})
 		},

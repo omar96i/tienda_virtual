@@ -2,7 +2,7 @@
 
 @section('content')
 <section id="app">
-    <register></register>
+    <register type="client"></register>
 </section>
 
 @endsection

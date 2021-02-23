@@ -3,33 +3,47 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-import login from './components/login.vue';
-import product from './components/product.vue';
+// Products //
+import IndexProduct from './components/product/index.vue';
+import EditProduct from './components/product/edit.vue';
+import StoreProduct from './components/product/store.vue';
+import DetalleProducto from './components/product/details.vue';
+/////////////
+// Category //
+import StoreCategory from './components/category/store.vue';
+import IndexCategory from './components/category/index.vue';
+import EditCategory from './components/category/edit.vue';
+import CategoryWithProducts from './components/category/withProducts.vue';
+import ProductsWithCategory from './components/category/productsWith.vue';
+
+
+/////////////
 import register from './components/register.vue';
-import AddCategory from './components/addCategory.vue';
-import category from './components/category.vue';
-import EditCategory from './components/editCategory.vue';
-import AddProduct from './components/addProduct.vue';
 import HomeProducts from './components/homeProducts.vue';
-import DetalleProducto from './components/detalleProducto.vue';
 import Factura from './components/factura.vue';
-
-
-
+import User from './components/user.vue';
+import RegisterAdmin from './components/registerAdmin.vue';
 
 
 const app = new Vue({
     el: '#app',
     components:{
-        product,
-        login,
-        register,
-        AddCategory,
-        category,
-        EditCategory,
-        AddProduct,
-        HomeProducts,
+        IndexProduct,
+        EditProduct,
         DetalleProducto,
-        Factura
+        StoreProduct,
+
+        StoreCategory,
+        IndexCategory,
+        EditCategory,
+        CategoryWithProducts,
+        ProductsWithCategory,
+
+        HomeProducts,
+        Factura,
+        User,
+        register,
+        RegisterAdmin
+
     }
 });

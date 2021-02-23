@@ -32,7 +32,7 @@ export default {
 
     methods:{
         async register(){
-			axios.post(`/register_category`, this.category).then(res=>{
+			axios.post(`/Category/store`, this.category).then(res=>{
                 if(res.data.saved){
                     this.category.name = ""
                     this.color = "alert-success"

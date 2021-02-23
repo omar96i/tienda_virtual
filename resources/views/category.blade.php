@@ -6,7 +6,7 @@
             <h3 class="mt-5">Categories</h3>
         </div>
         <hr>
-        <add-category></add-category>
-        <category :categories="{{ $categories }}" ref="categories"></category>
+        <store-category></store-category>
+        <index-category :categories="{{ $categories }}" ref="categories"></index-category>
     </section>
 @endsection

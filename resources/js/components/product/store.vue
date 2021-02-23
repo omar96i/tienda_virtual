@@ -40,7 +40,6 @@
                 </div>
             </div>
         </form>
-        <button @click="buscando">hola</button>
     </div>
 </template>
 <script>
@@ -57,9 +56,6 @@ export default {
         }
     },
     methods:{
-        buscando(){
-            console.log(this.$root.$children[1].getProducts());
-        },
         onImageChange(e){
             this.image = e.target.files[0]
         },
@@ -69,10 +65,10 @@ export default {
             data.append("value", this.value)
             data.append("stock", this.stock)
             data.append("description", this.description)
-            data.append("id_category", this.id_category)
+            data.append("category_id", this.id_category)
             data.append("url", this.image, this.image.name)
-			axios.post(`/product/insert`, data).then(res=>{
-                console.log(res.data);
+			axios.post(`/Product/store`, data).then(res=>{
+                this.$root.$children[1].getProducts()
 			}).catch(error=>{
                 console.log(error)
             })

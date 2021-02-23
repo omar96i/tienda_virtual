@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->integer('stock');
             $table->string('description');
             $table->string('url');
-            $table->unsignedBigInteger('id_category');
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
         });
     }

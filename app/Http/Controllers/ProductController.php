@@ -10,14 +10,97 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
 
-    public function index()
+    public function index($tipo = false)
     {
         $category = category::get();
-        $products = product::select('products.*', 'categories.name as Cname')->join('categories', 'products.id_category', '=', 'categories.id')->get();
-        return view('product', ['products' => $products, 'category' => $category]);
+        $products = product::with('categories')->get();
+        if($tipo == "admin")
+        {
+            return view('admin/products/product', ['products' => $products, 'category' => $category]);
+        }
+        else if(!$tipo)
+        {
+            return view('home', ['products' => $products]);
+        }
+        else if($tipo=="categories")
+        {
+            return view('productsOfCategories', ['categories' => $category]);
+        }
     }
 
-    public function indexH(){
+    public function withCategories($id, $tipo = false){
+        $products = product::with('categories')->where('category_id', $id)->get();
+
+        if($tipo == "consulta"){
+            return $products;
+        }
+
+        return view('categoryItsProducts', ['products' => $products]);
+
+
+    }
+
+    public function getProducts(){
+        $products = product::select('products.*', 'categories.name as Cname')->join('categories', 'products.id_category', '=', 'categories.id')->get();
+        return $products;
+    }
+
+    public function store(Request $request)
+    {
+        $imageName = time().'.'.$request->url->extension();
+        $request->url->move(public_path('images'), $imageName);
+        $products = new product($request->all());
+        $products->url = $imageName;
+        $products->save();
+        return response()->json([
+			'saved' => true,
+			'products' => $products
+		]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $imageName = time().'.'.$request->url->extension();
+        $request->url->move(public_path('images'), $imageName);
+        $products = product::find($id);
+        $products->name = $request->name;
+        $products->value = $request->value;
+        $products->stock = $request->stock;
+        $products->description = $request->description;
+        $products->category_id = $request->category_id;
+        $products->url = $imageName;
+        $products->save();
+        return response()->json([
+			'saved' => true,
+			'products' => $products
+		]);
+    }
+
+    public function edit_product($id)
+    {
+        $products = product::select('products.*', 'categories.name as Cname')->join('categories', 'products.id_category', '=', 'categories.id')->where('products.id', $id)->get();
+        return $products;
+    }
+
+
+    public function deleteProduct($id)
+    {
+        $product = product::find($id);
+        $product->delete();
+
+        return response()->json([
+			'deleted' => true
+		]);
+    }
+
+    public function updateIndex($id)
+    {
+        $products = product::find($id);
+        $category = category::get();
+        return view('editProduct', ['product' => $products, 'category' => $category]);
+    }
+
+    public function home(){
         $products = product::get();
         return view('home', ['products' => $products]);
     }
@@ -29,72 +112,9 @@ class ProductController extends Controller
             'products' => $products
         ]);
     }
-
     public function detalles($id)
     {
         $products = product::find($id);
         return view('detalleProducto', ['products' => $products]);
-    }
-
-    public function getProducts(){
-        $products = product::select('products.*', 'categories.name as Cname')->join('categories', 'products.id_category', '=', 'categories.id')->get();
-        return $products;
-    }
-
-    public function create()
-    {
-        //
-    }
-
-
-    public function store(Request $request)
-    {
-        $imageName = time().'.'.$request->url->extension();
-        $request->url->move(public_path('images'), $imageName);
-        $products = new product();
-        $products->name = $request->name;
-        $products->value = $request->value;
-        $products->stock = $request->stock;
-        $products->description = $request->description;
-        $products->id_category = $request->id_category;
-        $products->url = $imageName;
-        $products->save();
-        return response()->json([
-			'saved' => true,
-			'products' => $products
-		]);
-    }
-
-    public function edit_product($id){
-        $products = product::select('products.*', 'categories.name as Cname')->join('categories', 'products.id_category', '=', 'categories.id')->where('products.id', $id)->get();
-        return $products;
-    }
-
-
-    public function show(product $product)
-    {
-        //
-    }
-
-
-    public function edit(product $product)
-    {
-        //
-    }
-
-
-    public function update(Request $request, product $product)
-    {
-        //
-    }
-
-
-    public function delete(product $product)
-    {
-        $product->delete();
-
-        return response()->json([
-			'deleted' => true
-		]);
     }
 }
