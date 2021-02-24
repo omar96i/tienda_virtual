@@ -20,7 +20,7 @@ class ProductController extends Controller
         }
         else if(!$tipo)
         {
-            return view('home', ['products' => $products]);
+            return view('home', ['products' => $products, 'categories' => $category]);
         }
         else if($tipo=="categories")
         {
@@ -36,8 +36,6 @@ class ProductController extends Controller
         }
 
         return view('categoryItsProducts', ['products' => $products]);
-
-
     }
 
     public function getProducts(){

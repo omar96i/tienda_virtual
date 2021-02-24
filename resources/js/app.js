@@ -16,6 +16,9 @@ import EditCategory from './components/category/edit.vue';
 import CategoryWithProducts from './components/category/withProducts.vue';
 import ProductsWithCategory from './components/category/productsWith.vue';
 
+import FormProduct from './components/product/form.vue';
+
+
 
 /////////////
 import register from './components/register.vue';
@@ -32,6 +35,7 @@ const app = new Vue({
         EditProduct,
         DetalleProducto,
         StoreProduct,
+        FormProduct,
 
         StoreCategory,
         IndexCategory,
