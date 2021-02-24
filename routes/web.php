@@ -16,11 +16,19 @@ use Illuminate\Support\Facades\Hash;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/test', function () {
 
+Route::get('/test', function () {
+    // $role = Role::create(['name' => 'admin']);
+
+    $user = User::create([
+        'name' => 'juan',
+        'email' => 'juan@example.com',
+        'password' => Hash::make('12345678'),
+    ]);
+    $user->assignRole('admin');
 });
 
-Route::view('/login', 'login');
+Route::view('/login', 'access/login');
 Route::post('/login', 'UserController@loginSystem')->name('login');
 Route::any('/', 'ProductController@index')->name('home');
 
@@ -30,11 +38,11 @@ Route::get('/categories/{id}/{tipo}', 'ProductController@withCategories')->name(
 
 
 
-Route::view('/register', 'register')->name('register');
+Route::view('/register', 'access/register')->name('register');
 Route::post('/register_user/{type}', 'UserController@register')->name('register.user');
 Route::get('/productOfCategory/{category_id}', 'ProductController@get')->name('get.products.category');
 
-Route::group(['middleware' => ['auth']], function(){
+Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/logout', 'UserController@logout')->name('logout');
 
@@ -63,7 +71,3 @@ Route::group(['middleware' => ['auth']], function(){
 
     Route::view('/factura', 'factura')->name('factura');
 });
-
-
-
-

@@ -14,8 +14,7 @@ class ProductController extends Controller
     {
         $category = category::get();
         $products = product::with('categories')->get();
-        if($tipo == "admin")
-        {
+        if ($tipo == "admin") {
             return view('admin/products/product', ['products' => $products, 'category' => $category]);
         }
         else if(!$tipo)
@@ -28,37 +27,39 @@ class ProductController extends Controller
         }
     }
 
-    public function withCategories($id, $tipo = false){
+    public function withCategories($id, $tipo = false)
+    {
         $products = product::with('categories')->where('category_id', $id)->get();
 
-        if($tipo == "consulta"){
+        if ($tipo == "consulta") {
             return $products;
         }
 
-        return view('categoryItsProducts', ['products' => $products]);
+        return view('default/categories/categoryItsProducts', ['products' => $products]);
     }
 
-    public function getProducts(){
+    public function getProducts()
+    {
         $products = product::select('products.*', 'categories.name as Cname')->join('categories', 'products.id_category', '=', 'categories.id')->get();
         return $products;
     }
 
     public function store(Request $request)
     {
-        $imageName = time().'.'.$request->url->extension();
+        $imageName = time() . '.' . $request->url->extension();
         $request->url->move(public_path('images'), $imageName);
         $products = new product($request->all());
         $products->url = $imageName;
         $products->save();
         return response()->json([
-			'saved' => true,
-			'products' => $products
-		]);
+            'saved' => true,
+            'products' => $products
+        ]);
     }
 
     public function update(Request $request, $id)
     {
-        $imageName = time().'.'.$request->url->extension();
+        $imageName = time() . '.' . $request->url->extension();
         $request->url->move(public_path('images'), $imageName);
         $products = product::find($id);
         $products->name = $request->name;
@@ -69,9 +70,9 @@ class ProductController extends Controller
         $products->url = $imageName;
         $products->save();
         return response()->json([
-			'saved' => true,
-			'products' => $products
-		]);
+            'saved' => true,
+            'products' => $products
+        ]);
     }
 
     public function edit_product($id)
@@ -87,20 +88,21 @@ class ProductController extends Controller
         $product->delete();
 
         return response()->json([
-			'deleted' => true
-		]);
+            'deleted' => true
+        ]);
     }
 
     public function updateIndex($id)
     {
         $products = product::find($id);
         $category = category::get();
-        return view('editProduct', ['product' => $products, 'category' => $category]);
+        return view('admin/products/editProduct', ['product' => $products, 'category' => $category]);
     }
 
-    public function home(){
+    public function home()
+    {
         $products = product::get();
-        return view('home', ['products' => $products]);
+        return view('default/products/home', ['products' => $products]);
     }
 
     public function indexT(Request $request)
@@ -113,6 +115,6 @@ class ProductController extends Controller
     public function detalles($id)
     {
         $products = product::find($id);
-        return view('detalleProducto', ['products' => $products]);
+        return view('default/products/detalleProducto', ['products' => $products]);
     }
 }

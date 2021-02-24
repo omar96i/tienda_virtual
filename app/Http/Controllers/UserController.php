@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function loginSystem(Request $request){
-        $user_data=[
+    public function loginSystem(Request $request)
+    {
+        $user_data = [
             'email' => $request->email,
             'password' => $request->password
         ];
@@ -20,26 +21,29 @@ class UserController extends Controller
         return view('home');
     }
 
-    public function logout(){
+    public function logout()
+    {
         Auth::logout();
         return redirect()->route('home');
     }
 
-    public function index(){
+    public function index()
+    {
         $user = User::get();
-        return view('user', ['users'=>$user]);
+        return view('admin/user/user', ['users' => $user]);
     }
 
-    public function register(Request $request, $type){
+    public function register(Request $request, $type)
+    {
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();
 
-        if($type=="admin"){
+        if ($type == "admin") {
             $user->assignRole('admin');
-        }else if($type == "client"){
+        } else if ($type == "client") {
             $user->assingRole('client');
         }
 

@@ -32,7 +32,7 @@
 		data() {
 			return {
 				products_i: {},
-				url: "http://127.0.0.1:8000/detalleProducto",
+				url: "http://127.0.0.1:8000/Product/detalleProducto",
 				q: {
 					buscar: "",
 				},
