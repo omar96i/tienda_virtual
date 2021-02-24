@@ -11,7 +11,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = category::get();
-        return view('category', ['categories' => $categories]);
+        return view('admin/categories/category', ['categories' => $categories]);
     }
 
     public function store(Request $request)
@@ -19,28 +19,27 @@ class CategoryController extends Controller
         $category = new category($request->all());
         $category->save();
 
-        if ( ! $category->save())
-        {
+        if (!$category->save()) {
             return response()->json([
                 'saved' => false
             ]);
         }
 
         return response()->json([
-			'saved' => true,
-			'category' => $category
-		]);
+            'saved' => true,
+            'category' => $category
+        ]);
     }
 
     public function update(Request $request,  category $category)
     {
         $category->update($request->all());
-		return $category;
+        return $category;
     }
 
     public function delete(category $category)
     {
-        if ($category->delete()){
+        if ($category->delete()) {
             return response()->json([
                 'status' => true
             ]);
