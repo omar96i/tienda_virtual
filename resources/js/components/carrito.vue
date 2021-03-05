@@ -116,7 +116,7 @@
 			},
 			async Finalizar(id) {
 				axios.get(`/Factura/Finalizar/${id}`).then((res) => {
-					console.log(res.data);
+					this.status_mens = true;
 				});
 			},
 		},

@@ -2060,13 +2060,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     Finalizar: function Finalizar(id) {
+      var _this4 = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 axios.get("/Factura/Finalizar/".concat(id)).then(function (res) {
-                  console.log(res.data);
+                  _this4.status_mens = true;
                 });
 
               case 1:
@@ -2079,13 +2081,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
-    var _this4 = this;
+    var _this5 = this;
 
     axios.get("/Factura/index").then(function (res) {
       if (res.data) {
-        _this4.status = res.data.status;
-        _this4.factura = res.data.factura;
-        _this4.userAuth = res.data.user;
+        _this5.status = res.data.status;
+        _this5.factura = res.data.factura;
+        _this5.userAuth = res.data.user;
       } else {
         alert("Error");
       }
