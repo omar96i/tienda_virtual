@@ -21,11 +21,11 @@
             </tbody>
         </table>
         <hr>
-        <edit-category :category = items></edit-category>
+        <form-category :category="items" type="update"></form-category>
     </div>
 </template>
 <script>
-import EditCategory from './edit.vue';
+import FormCategory from './form.vue';
 export default {
     props: ['categories'],
     data(){
@@ -56,7 +56,7 @@ export default {
         }
     },
     components:{
-        EditCategory
+        FormCategory
     }
 }
 </script>

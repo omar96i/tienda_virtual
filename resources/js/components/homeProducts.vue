@@ -1,12 +1,12 @@
 <template>
-	<div>
-		<form class="d-flex" @submit.prevent="filtro">
+	<div class="m-2">
+		<form class="d-flex mt-4" @submit.prevent="filtro">
 			<input name="buscarpor" class="form-control me-2" type="search" placeholder="Buscar por nombre" aria-label="Search" v-model="q.buscar">
 			<button class="btn btn-outline-success" type="submit">Buscar</button>
 		</form>
-		<div class="row d-flex justify-content-center">
+		<div class="row d-flex justify-content-center mt-5">
 			<div v-for="(products, index) in products_i" :key="index" class="col-4">
-				<div class="card col-11 mb-4">
+				<div class="card col-11 mb-4 bg-light">
 					<div class="card-header d-flex justify-content-center">
 						<img v-bind:src="'http://127.0.0.1:8000/images/'+products.url" class="card-img-top" alt="..." style="width: 250px">
 					</div>
@@ -19,7 +19,7 @@
 							</div>
 							<a class="p-2 text-dark" href="#">Disponibles {{ products.stock }}</a>
 						</div>
-						<a v-bind:href="url+'/'+products.id" class="btn btn-primary">Detalle</a>
+						<a v-bind:href="url+'/'+products.id" class="btn btn-success">Comprar</a>
 					</div>
 				</div>
 			</div>

@@ -42,7 +42,13 @@ class User extends Authenticatable
         'role_user'
     ];
 
-    public function getRoleUserAttribute(){
+    public function facturas()
+    {
+        return $this->hasMany(Factura::class, 'user_id');
+    }
+
+    public function getRoleUserAttribute()
+    {
         return $this->getRoleNames();
     }
 

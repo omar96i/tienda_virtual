@@ -5,28 +5,14 @@ use Spatie\Permission\Models\Role;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Factura;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
 
 Route::get('/test', function () {
-    // $role = Role::create(['name' => 'admin']);
-
-    $user = User::create([
-        'name' => 'juan',
-        'email' => 'juan@example.com',
-        'password' => Hash::make('12345678'),
-    ]);
-    $user->assignRole('admin');
+    return auth()->user()->facturas->where('id', '1');
 });
+
 
 Route::view('/login', 'access/login');
 Route::post('/login', 'UserController@loginSystem')->name('login');
@@ -57,15 +43,24 @@ Route::group(['middleware' => ['auth']], function () {
         Route::any('/filtrado', 'ProductController@IndexT');
         Route::get('/product/{tipo}', 'ProductController@index')->name('product');
         Route::post('/store', 'ProductController@store')->name('product.add');
-        Route::post('/getProducts', 'ProductController@getProducts')->name('getProducts');
         Route::any('/detalleProducto/{id}', 'ProductController@detalles')->name('DetalleProducto');
-        Route::get('/update/{id}', 'ProductController@updateIndex')->name('update.product');
-        Route::post('/product/update/{id}', 'ProductController@update');
-        Route::any('/delete/{id}', 'ProductController@deleteProduct');
+        Route::get('/edit/{id}', 'ProductController@edit')->name('update.product');
+        Route::post('/update/{product}', 'ProductController@update');
+        Route::any('/delete/{product}', 'ProductController@delete');
+    });
+
+    Route::prefix('Factura')->group(function () {
+        Route::post('/store/{product}', 'FacturaController@store')->name('factura.store');
+        Route::view('/carrito', 'default/carrito/carrito')->name('carrito');
+        Route::get('/index', 'FacturaController@index')->name('index');
+        Route::post('/updateCantidad/{factura}', 'FacturaController@updateCantidad');
+        Route::post('/deleteProducto/{factura}', 'FacturaController@deleteProducto');
+        Route::get('/Finalizar/{factura}', 'FacturaController@finalizar');
     });
 
     Route::prefix('User')->group(function () {
         Route::get('/user', 'UserController@index')->name('user');
+        Route::get('/delete/{User}', 'UserController@delete')->name('user.delete');
     });
 
 

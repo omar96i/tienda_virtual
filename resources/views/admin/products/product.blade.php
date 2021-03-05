@@ -7,8 +7,7 @@
             <h3 class="mt-5">Products</h3>
         </div>
         <hr>
-        <store-product :category="{{$category}}"></store-product>
+        <form-product :category="{{$category}}" type='insert' product='vacio'></form-product>
         <index-product :products="{{$products}}"></index-product>
     </section>
-
 @endsection

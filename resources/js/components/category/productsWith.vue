@@ -1,27 +1,25 @@
 <template>
 	<div>
-		<ul class="list-group">
-			<li class="list-group-item">
-				<div class="container mt-5">
-					<div class="row">
-						<div v-for="(products, index) in products" :key="index" class="col-3 mr-2">
-							<div class="card" style="width: 18rem;">
-								<div class="card-body">
-									<img class="card-img-top" v-bind:src="'http://127.0.0.1:8000/images/'+products.url" alt="Card image cap">
-									<h5 class="card-title">{{ products.name }}</h5>
-									<p class="card-text">{{ products.description }}</p>
-									<h6><strong>Category: </strong>{{products.categories.name}}</h6>
-									<a href="#" class="card-link">Cantidad {{ products.stock }}</a>
-									<a href="#" class="card-link">Precio {{ products.value }}</a>
-									<a href="#" class="card-link">Another link</a>
-								</div>
+		<div class="row d-flex justify-content-center mt-5">
+			<div v-for="(products, index) in products" :key="index" class="col-4">
+				<div class="card col-11 mb-4 bg-light">
+					<div class="card-header d-flex justify-content-center">
+						<img v-bind:src="'http://127.0.0.1:8000/images/'+products.url" class="card-img-top" alt="..." style="width: 250px">
+					</div>
+					<div class="card-body">
+						<h5 class="card-title">{{ products.name }}</h5>
+						<p class="card-text">{{products.description}}</p>
+						<div>
+							<div class="price text-success">
+								<h5 class="mt-4">${{ products.value }}</h5>
 							</div>
+							<a class="p-2 text-dark" href="#">Disponibles {{ products.stock }}</a>
 						</div>
-
+						<a v-bind:href="url+'/'+products.id" class="btn btn-success">Comprar</a>
 					</div>
 				</div>
-			</li>
-		</ul>
+			</div>
+		</div>
 	</div>
 </template>
 <script>
@@ -29,6 +27,7 @@
 		props: ["categories"],
 		data() {
 			return {
+                url: "http://127.0.0.1:8000/Product/detalleProducto",
 				products: [],
 			};
 		},

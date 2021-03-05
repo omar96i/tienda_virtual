@@ -6,6 +6,8 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
+                    <th scope="col">Role</th>
+
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -14,9 +16,10 @@
                     <th scope="row">{{ (index+1) }}</th>
                     <td>{{ user.name }}</td>
                     <td>{{ user.email }}</td>
+                    <td>{{ user.role_user[0] }}</td>
                     <td>
                         <button class="btn btn-info mr-2">Edit</button>
-                        <button class="btn btn-danger">Delete</button>
+                        <button class="btn btn-danger" @click="borrar(user, index)">Delete</button>
                     </td>
                 </tr>
             </tbody>
@@ -27,5 +30,12 @@
 <script>
 export default {
     props:['users'],
+    methods:{
+        async borrar(user, index){
+            axios.get(`/User/delete/${user.id}`).then(res=>{
+                console.log(res.data)
+            })
+        }
+    }
 }
 </script>

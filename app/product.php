@@ -15,4 +15,9 @@ class product extends Model
     {
         return $this->belongsTo(category::class, 'category_id');
     }
+
+    public function factura_producto()
+    {
+        return $this->belongsToMany(Factura::class, 'factura_producto')->withPivot('factura_id', 'product_id', 'cantidad', 'created_at', 'updated_at');
+    }
 }

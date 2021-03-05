@@ -6,7 +6,7 @@
             <h3 class="mt-5">Categories</h3>
         </div>
         <hr>
-        <store-category></store-category>
+        <form-category type="insert"></form-category>
         <index-category :categories="{{ $categories }}" ref="categories"></index-category>
     </section>
 @endsection
